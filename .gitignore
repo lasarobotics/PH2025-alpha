@@ -169,19 +169,23 @@ out/
 .fleet
 
 # Simulation GUI and other tools window save file
+*-window.json
 networktables.json
 simgui.json
-*-window.json
+simgui-ds.json
 
-# Simulation data log directory
-logs/
+# Build Constants
+src/main/java/frc/robot/BuildConstants.java
 
-# Folder that has CTRE Phoenix Sim device config storage
+# Battery Tracker
+previous_battery.txt
+
+# Odometer
+*-odometer.txt
+
+# CTRE sim
 ctre_sim/
 
-# clangd
-/.cache
-compile_commands.json
-
-# Eclipse generated file for annotation processors
-.factorypath
+# Local libs
+libs
+libs/
