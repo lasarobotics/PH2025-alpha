@@ -108,30 +108,4 @@ public final class Constants {
     public static final Spark.ID RIGHT_REAR_DRIVE_MOTOR_ID = new Spark.ID("DriveHardware/Swerve/RightRear/Drive", 8);
     public static final Spark.ID RIGHT_REAR_ROTATE_MOTOR_ID = new Spark.ID("DriveHardware/Swerve/RightRear/Rotate", 9);
   }
-
-  public static class VisionHardware {
-    public static final String CAMERA_A_NAME = "Arducam_OV9782_USB_Camera_A";
-    public static final Transform3d CAMERA_A_LOCATION = new Transform3d(
-      new Translation3d(-0.1016, -0.2921, 0.521),
-      new Rotation3d(0.0, Math.toRadians(-26.0), Math.toRadians(+180.0))
-    );
-    public static final Resolution CAMERA_A_RESOLUTION = Resolution.RES_1280_720;
-    public static final Rotation2d CAMERA_A_FOV = Rotation2d.fromDegrees(79.7);
-
-    public static final String CAMERA_B_NAME = "Arducam_OV9782_USB_Camera_B";
-    public static final Transform3d CAMERA_B_LOCATION = new Transform3d(
-      new Translation3d(0.0254, -0.2921, 0.584),
-      new Rotation3d(0.0, Math.toRadians(-25.6), 0.0)
-    );
-    public static final Resolution CAMERA_B_RESOLUTION = Resolution.RES_1280_720;
-    public static final Rotation2d CAMERA_B_FOV = Rotation2d.fromDegrees(79.7);
-
-    public static final String CAMERA_OBJECT_NAME = "Arducam_OV9782_USB_Camera_C";
-    public static final Transform3d CAMERA_OBJECT_LOCATION = new Transform3d(
-      new Translation3d(0.3, 0.0, 0.5),
-      new Rotation3d(0, Math.toRadians(+15.0), Math.toRadians(180))
-    );
-    public static final Resolution CAMERA_OBJECT_RESOLUTION = Resolution.RES_1280_720;
-    public static final Rotation2d CAMERA_OBJECT_FOV = Rotation2d.fromDegrees(79.7);
-  }
 }

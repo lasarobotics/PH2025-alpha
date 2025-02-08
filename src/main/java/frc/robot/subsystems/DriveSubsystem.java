@@ -13,7 +13,6 @@ import org.lasarobotics.drive.swerve.parent.REVSwerveModule;
 import org.lasarobotics.hardware.kauailabs.NavX2;
 import org.lasarobotics.hardware.revrobotics.Spark;
 import org.lasarobotics.utils.PIDConstants;
-import org.lasarobotics.vision.AprilTagCamera;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.config.RobotConfig;
@@ -147,23 +146,7 @@ public class DriveSubsystem extends SwerveDrive {
       Constants.Drive.DRIVE_CURRENT_LIMIT
     );
 
-    AprilTagCamera frontCamera = new AprilTagCamera(
-      Constants.VisionHardware.CAMERA_A_NAME,
-      Constants.VisionHardware.CAMERA_A_LOCATION,
-      Constants.VisionHardware.CAMERA_A_RESOLUTION,
-      Constants.VisionHardware.CAMERA_A_FOV,
-      Constants.Field.FIELD_LAYOUT
-    );
-
-    AprilTagCamera rearCamera = new AprilTagCamera(
-      Constants.VisionHardware.CAMERA_B_NAME,
-      Constants.VisionHardware.CAMERA_B_LOCATION,
-      Constants.VisionHardware.CAMERA_B_RESOLUTION,
-      Constants.VisionHardware.CAMERA_B_FOV,
-      Constants.Field.FIELD_LAYOUT
-    );
-
-    Hardware drivetrainHardware = new Hardware(navx, lFrontModule, rFrontModule, lRearModule, rRearModule, frontCamera, rearCamera);
+    Hardware drivetrainHardware = new Hardware(navx, lFrontModule, rFrontModule, lRearModule, rRearModule);
 
     return drivetrainHardware;
   }
