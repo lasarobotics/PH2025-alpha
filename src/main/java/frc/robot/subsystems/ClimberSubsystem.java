@@ -9,6 +9,8 @@ import edu.wpi.first.units.Units;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import edu.wpi.first.units.measure.Dimensionless;
+
 
 public class ClimberSubsystem extends SubsystemBase implements AutoCloseable {
   public static class Hardware {
@@ -21,7 +23,7 @@ public class ClimberSubsystem extends SubsystemBase implements AutoCloseable {
 
   private Spark m_climberMotor;
 
-  private Double m_climberSpeed;
+  private Dimensionless m_climberSpeed;
 
   /**
    * Create an instance of Climber Subsystem
@@ -31,7 +33,7 @@ public class ClimberSubsystem extends SubsystemBase implements AutoCloseable {
    * 
    * @param climbHardware Hardware devices required by climb
    */
-  public ClimberSubsystem(Hardware climberHardware, Double climberSpeed) {
+  public ClimberSubsystem(Hardware climberHardware, Dimensionless climberSpeed) {
     this.m_climberMotor = climberHardware.climberMotor;
     this.m_climberSpeed = climberSpeed;
   }
@@ -100,6 +102,6 @@ public class ClimberSubsystem extends SubsystemBase implements AutoCloseable {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    m_climberMotor.periodic();
+    
   }
 }
