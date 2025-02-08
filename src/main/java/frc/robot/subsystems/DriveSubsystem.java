@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.subsystems.drive;
+package frc.robot.subsystems;
 
 import org.apache.commons.math3.analysis.polynomials.PolynomialSplineFunction;
 import org.lasarobotics.drive.swerve.AdvancedSwerveKinematics.ControlCentricity;
@@ -23,7 +23,7 @@ import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.Dimensionless;
 import edu.wpi.first.units.measure.Time;
 import edu.wpi.first.wpilibj.DriverStation;
-import main.java.frc.robot.Constants;
+import frc.robot.Constants;
 
 public class DriveSubsystem extends SwerveDrive {
 

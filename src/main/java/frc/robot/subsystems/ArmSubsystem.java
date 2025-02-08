@@ -2,13 +2,14 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
+package frc.robot.subsystems;
 import org.lasarobotics.hardware.revrobotics.Spark;
+import com.revrobotics.spark.SparkBase.ControlType;
 
-import main.java.frc.robot.Constants;
+import frc.robot.Constants;
 import edu.wpi.first.units.Units;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import main.java.frc.robot.Constants;
 
 public class ArmSubsystem {
   private Spark m_armMotor;
