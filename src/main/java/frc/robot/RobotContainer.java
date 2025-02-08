@@ -6,12 +6,13 @@ package frc.robot;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.subsystems.ArmSubsystem;
+import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
-import frc.robot.Constants;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class RobotContainer {
   public static final DriveSubsystem DRIVE_SUBSYSTEM =
@@ -25,6 +26,15 @@ public class RobotContainer {
     Constants.HID.CONTROLLER_DEADBAND,
     Constants.Drive.DRIVE_LOOKAHEAD
   );
+
+  public static final ArmSubsystem ARM_SUBSYSTEM = new ArmSubsystem (
+    ArmSubsystem.initializeHardware()
+  );
+
+  public static final ClimberSubsystem CLIMBER_SUBSYSTEM = new ClimberSubsystem (
+    ClimberSubsystem.initializeHardware()
+  );
+
   private static final CommandXboxController PRIMARY_CONTROLLER = new CommandXboxController(Constants.HID.PRIMARY_CONTROLLER_PORT);
 
   private static SendableChooser<Command> m_automodeChooser = new SendableChooser<>();
@@ -50,12 +60,14 @@ public class RobotContainer {
   }
 
   private void configureBindings() {
-    // Start button - toggle traction control
-    PRIMARY_CONTROLLER.start().onTrue(DRIVE_SUBSYSTEM.toggleTractionControlCommand());
-
-    PRIMARY_CONTROLLER.povLeft().onTrue(DRIVE_SUBSYSTEM.resetPoseCommand(() -> new Pose2d()));
-
     PRIMARY_CONTROLLER.x().onTrue(DRIVE_SUBSYSTEM.runOnce(() -> DRIVE_SUBSYSTEM.resetPoseCommand(()->new Pose2d())));
+
+    PRIMARY_CONTROLLER.rightTrigger().whileTrue(ARM_SUBSYSTEM.intakeCommand());
+    PRIMARY_CONTROLLER.leftTrigger().whileTrue(ARM_SUBSYSTEM.outtakeCommand());
+    PRIMARY_CONTROLLER.a().whileTrue(ARM_SUBSYSTEM.lowerArmCommand());
+    PRIMARY_CONTROLLER.b().whileTrue(ARM_SUBSYSTEM.raiseArmCommand());
+    PRIMARY_CONTROLLER.rightBumper().whileTrue(CLIMBER_SUBSYSTEM.raiseClimbCommand());
+    PRIMARY_CONTROLLER.leftBumper().whileTrue(CLIMBER_SUBSYSTEM.lowerClimbCommand());
   }
 
     /**

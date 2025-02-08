@@ -93,13 +93,15 @@ public final class Constants {
   }
 
   public static class Arm {
-    public static final Spark.ID ARM_MOTOR_ID = new Spark.ID("ArmHardware/Amp", 13);
-    public static final Spark.ID ROLLER_MOTOR_ID = new Spark.ID("ArmHardware/Amp", 14);
+    public static final Spark.ID ARM_MOTOR_ID = new Spark.ID("ArmHardware/Arm", 13);
+    public static final Spark.ID ROLLER_MOTOR_ID = new Spark.ID("ArmHardware/Roller", 14);
+    public static final Dimensionless ARM_SPEED = Units.Percent.of(50);
+    public static final Dimensionless ROLLER_SPEED = Units.Percent.of(80);
   }
 
   public static class Climber {
     public static final Spark.ID CLIMB_MOTOR_ID = new Spark.ID("ClimberHardware/Climb", 15);
-    public static final Double CLIMBER_SPEED = (Double)0.1;
+    public static final Dimensionless CLIMBER_SPEED = Units.Percent.of(10);
   }
 
   public static class REVDriveHardware {

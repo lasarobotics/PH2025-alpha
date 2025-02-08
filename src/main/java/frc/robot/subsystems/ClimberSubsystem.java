@@ -9,21 +9,12 @@ import edu.wpi.first.units.Units;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import edu.wpi.first.units.measure.Dimensionless;
 
 
 public class ClimberSubsystem extends SubsystemBase implements AutoCloseable {
-  public static class Hardware {
-    private Spark climberMotor;
-
-    public Hardware(Spark climberMotor) {
-    this.climberMotor = climberMotor;
-    }
-  }
+  public static record Hardware(Spark climberMotor) {}
 
   private Spark m_climberMotor;
-
-  private Dimensionless m_climberSpeed;
 
   /**
    * Create an instance of Climber Subsystem
@@ -33,9 +24,8 @@ public class ClimberSubsystem extends SubsystemBase implements AutoCloseable {
    * 
    * @param climbHardware Hardware devices required by climb
    */
-  public ClimberSubsystem(Hardware climberHardware, Dimensionless climberSpeed) {
+  public ClimberSubsystem(Hardware climberHardware) {
     this.m_climberMotor = climberHardware.climberMotor;
-    this.m_climberSpeed = climberSpeed;
   }
 
   /**
@@ -61,14 +51,14 @@ public class ClimberSubsystem extends SubsystemBase implements AutoCloseable {
    * Runs the climb motor to raise arm
    */
   private void raiseClimber() {
-    m_climberMotor.set(m_climberSpeed.in(Units.Percent), ControlType.kDutyCycle);
+    m_climberMotor.set(Constants.Climber.CLIMBER_SPEED.in(Units.Percent), ControlType.kDutyCycle);
   }
 
   /**
    * Runs the climb motor to lower arm
    */
   private void lowerClimber() {
-    m_climberMotor.set(-m_climberSpeed.in(Units.Percent), ControlType.kDutyCycle);
+    m_climberMotor.set(-Constants.Climber.CLIMBER_SPEED.in(Units.Percent), ControlType.kDutyCycle);
   }
 
   /**
@@ -88,20 +78,19 @@ public class ClimberSubsystem extends SubsystemBase implements AutoCloseable {
   }
   
   /**
-   * Stop command
+   * Command to stop the motor
+   * @return Command to stop the climber motor
    */
   public Command stopCommand() {
     return runOnce(() -> stop());
   }
 
+  /**
+   * Method to close the motor
+   * @return Closes the arm motor
+   */
   @Override
   public void close() {
     m_climberMotor.close();
-  }
-
-  @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
-    
   }
 }
