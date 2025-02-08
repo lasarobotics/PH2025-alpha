@@ -12,17 +12,12 @@ import org.lasarobotics.hardware.kauailabs.NavX2;
 import org.lasarobotics.hardware.revrobotics.Spark;
 import org.lasarobotics.utils.FFConstants;
 import org.lasarobotics.utils.PIDConstants;
-import org.lasarobotics.vision.AprilTagCamera.Resolution;
 
 import com.pathplanner.lib.config.ModuleConfig;
 
 import edu.wpi.first.apriltag.AprilTag;
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Rotation3d;
-import edu.wpi.first.math.geometry.Transform3d;
-import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.units.Units;
 import edu.wpi.first.units.measure.Angle;
@@ -95,6 +90,16 @@ public final class Constants {
     public static final MAXSwerveModule.GearRatio REV_GEAR_RATIO = MAXSwerveModule.GearRatio.L3;
 
     public static final ModuleConfig MODULE_CONFIG = new ModuleConfig(DRIVE_WHEEL.diameter.div(2), Units.MetersPerSecond.of(5.172), 1.3, DCMotor.getKrakenX60Foc(1), DRIVE_CURRENT_LIMIT, 1);
+  }
+
+  public static class Arm {
+    public static final Spark.ID ARM_MOTOR_ID = new Spark.ID("ArmHardware/Amp", 13);
+    public static final Spark.ID ROLLER_MOTOR_ID = new Spark.ID("ArmHardware/Amp", 14);
+  }
+
+  public static class Climber {
+    public static final Spark.ID CLIMB_MOTOR_ID = new Spark.ID("ClimberHardware/Climb", 15);
+    public static final Double CLIMBER_SPEED = (Double)0.1;
   }
 
   public static class REVDriveHardware {
