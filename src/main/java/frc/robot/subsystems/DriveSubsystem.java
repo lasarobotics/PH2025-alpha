@@ -167,7 +167,7 @@ public class DriveSubsystem extends SwerveDrive {
       ),
       new RobotConfig(
         Constants.Drive.MASS, // The robot configuration
-        Units.KilogramSquareMeters.of(1),
+        Units.KilogramSquareMeters.of(5),
         Constants.Drive.MODULE_CONFIG,
         m_drivetrainHardware.lFrontModule().getModuleCoordinate(),
         m_drivetrainHardware.rFrontModule().getModuleCoordinate(),

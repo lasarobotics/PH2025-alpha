@@ -62,6 +62,10 @@ public class RobotContainer {
   private void configureBindings() {
     PRIMARY_CONTROLLER.x().onTrue(DRIVE_SUBSYSTEM.runOnce(() -> DRIVE_SUBSYSTEM.resetPoseCommand(()->new Pose2d())));
 
+    PRIMARY_CONTROLLER.start().onTrue(DRIVE_SUBSYSTEM.toggleTractionControlCommand());
+
+    PRIMARY_CONTROLLER.povLeft().onTrue(DRIVE_SUBSYSTEM.resetPoseCommand(() -> new Pose2d()));
+
     PRIMARY_CONTROLLER.rightTrigger().whileTrue(ARM_SUBSYSTEM.intakeCommand());
     PRIMARY_CONTROLLER.leftTrigger().whileTrue(ARM_SUBSYSTEM.outtakeCommand());
     PRIMARY_CONTROLLER.a().whileTrue(ARM_SUBSYSTEM.lowerArmCommand());

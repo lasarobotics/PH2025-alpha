@@ -4,21 +4,37 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.TimedRobot;
+import java.nio.file.Path;
+
+import org.lasarobotics.hardware.PurpleManager;
+import org.littletonrobotics.junction.LoggedRobot;
+
+import edu.wpi.first.apriltag.AprilTagFieldLayout;
+import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
-public class Robot extends TimedRobot {
+public class Robot extends LoggedRobot {
   private Command m_autonomousCommand;
 
   private final RobotContainer m_robotContainer;
 
   public Robot() {
+    PurpleManager.initialize(
+      this,
+      AprilTagFieldLayout.loadField(AprilTagFields.k2025Reefscape),
+      Path.of("/media/sda1"),
+      BuildConstants.MAVEN_NAME,
+      BuildConstants.GIT_SHA,
+      BuildConstants.BUILD_DATE,
+      true
+    );
     m_robotContainer = new RobotContainer();
   }
 
   @Override
   public void robotPeriodic() {
+    PurpleManager.update();
     CommandScheduler.getInstance().run();
   }
 
@@ -69,7 +85,4 @@ public class Robot extends TimedRobot {
 
   @Override
   public void testExit() {}
-
-  @Override
-  public void simulationPeriodic() {}
 }

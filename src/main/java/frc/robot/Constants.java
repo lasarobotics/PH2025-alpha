@@ -7,7 +7,6 @@ import org.apache.commons.math3.analysis.polynomials.PolynomialSplineFunction;
 import org.lasarobotics.drive.swerve.AdvancedSwerveKinematics.ControlCentricity;
 import org.lasarobotics.drive.swerve.DriveWheel;
 import org.lasarobotics.drive.swerve.child.MAXSwerveModule;
-import org.lasarobotics.drive.swerve.child.SwerveX2Module;
 import org.lasarobotics.hardware.kauailabs.NavX2;
 import org.lasarobotics.hardware.revrobotics.Spark;
 import org.lasarobotics.utils.FFConstants;
@@ -86,7 +85,6 @@ public final class Constants {
     public static final PolynomialSplineFunction DRIVE_THROTTLE_INPUT_CURVE = SPLINE_INTERPOLATOR.interpolate(DRIVE_THROTTLE_INPUT_CURVE_X, DRIVE_THROTTLE_INPUT_CURVE_Y);
     public static final PolynomialSplineFunction DRIVE_TURN_INPUT_CURVE = SPLINE_INTERPOLATOR.interpolate(DRIVE_TURN_INPUT_CURVE_X, DRIVE_TURN_INPUT_CURVE_Y);
 
-    public static final SwerveX2Module.GearRatio CTRE_GEAR_RATIO = SwerveX2Module.GearRatio.X4_3;
     public static final MAXSwerveModule.GearRatio REV_GEAR_RATIO = MAXSwerveModule.GearRatio.L3;
 
     public static final ModuleConfig MODULE_CONFIG = new ModuleConfig(DRIVE_WHEEL.diameter.div(2), Units.MetersPerSecond.of(5.172), 1.3, DCMotor.getKrakenX60Foc(1), DRIVE_CURRENT_LIMIT, 1);
@@ -95,8 +93,8 @@ public final class Constants {
   public static class Arm {
     public static final Spark.ID ARM_MOTOR_ID = new Spark.ID("ArmHardware/Arm", 13);
     public static final Spark.ID ROLLER_MOTOR_ID = new Spark.ID("ArmHardware/Roller", 14);
-    public static final Dimensionless ARM_SPEED = Units.Percent.of(50);
-    public static final Dimensionless ROLLER_SPEED = Units.Percent.of(80);
+    public static final Dimensionless ARM_SPEED = Units.Percent.of(30);
+    public static final Dimensionless ROLLER_SPEED = Units.Percent.of(30);
   }
 
   public static class Climber {
