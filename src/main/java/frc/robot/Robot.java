@@ -22,12 +22,12 @@ public class Robot extends LoggedRobot {
   public Robot() {
     PurpleManager.initialize(
       this,
-      AprilTagFieldLayout.loadField(AprilTagFields.k2025Reefscape),
+      AprilTagFieldLayout.loadField(AprilTagFields.k2025ReefscapeAndyMark),
       Path.of("/media/sda1"),
       BuildConstants.MAVEN_NAME,
       BuildConstants.GIT_SHA,
       BuildConstants.BUILD_DATE,
-      true
+      false
     );
     m_robotContainer = new RobotContainer();
   }

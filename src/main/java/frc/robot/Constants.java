@@ -90,27 +90,27 @@ public final class Constants {
     public static final ModuleConfig MODULE_CONFIG = new ModuleConfig(DRIVE_WHEEL.diameter.div(2), Units.MetersPerSecond.of(5.172), 1.3, DCMotor.getKrakenX60Foc(1), DRIVE_CURRENT_LIMIT, 1);
   }
 
-  public static class Arm {
-    public static final Spark.ID ARM_MOTOR_ID = new Spark.ID("ArmHardware/Arm", 13);
-    public static final Spark.ID ROLLER_MOTOR_ID = new Spark.ID("ArmHardware/Roller", 14);
-    public static final Dimensionless ARM_SPEED = Units.Percent.of(30);
-    public static final Dimensionless ROLLER_SPEED = Units.Percent.of(30);
+  public static class Arm {    
+    public static final Spark.ID ROLLER_MOTOR_ID = new Spark.ID("IntakeHardware/Roller", 51);
+    public static final Spark.ID ARM_MOTOR_ID = new Spark.ID("IntakeHardware/Arm", 52);
+    public static final Dimensionless ARM_SPEED = Units.Percent.of(5);
+    public static final Dimensionless ROLLER_SPEED = Units.Percent.of(20);
   }
 
   public static class Climber {
-    public static final Spark.ID CLIMB_MOTOR_ID = new Spark.ID("ClimberHardware/Climb", 15);
+    public static final Spark.ID CLIMB_MOTOR_ID = new Spark.ID("ClimberHardware/Climb", 61);
     public static final Dimensionless CLIMBER_SPEED = Units.Percent.of(10);
   }
 
   public static class REVDriveHardware {
     public static final NavX2.ID NAVX_ID = new NavX2.ID("DriveHardware/NavX2");
-    public static final Spark.ID LEFT_FRONT_DRIVE_MOTOR_ID = new Spark.ID("DriveHardware/Swerve/LeftFront/Drive", 2);
-    public static final Spark.ID LEFT_FRONT_ROTATE_MOTOR_ID = new Spark.ID("DriveHardware/Swerve/LeftFront/Rotate", 3);
-    public static final Spark.ID RIGHT_FRONT_DRIVE_MOTOR_ID = new Spark.ID("DriveHardware/Swerve/RightFront/Drive", 4);
-    public static final Spark.ID RIGHT_FRONT_ROTATE_MOTOR_ID = new Spark.ID("DriveHardware/Swerve/RightFront/Rotate", 5);
-    public static final Spark.ID LEFT_REAR_DRIVE_MOTOR_ID = new Spark.ID("DriveHardware/Swerve/LeftRear/Drive", 6);
-    public static final Spark.ID LEFT_REAR_ROTATE_MOTOR_ID = new Spark.ID("DriveHardware/Swerve/LeftRear/Rotate", 7);
-    public static final Spark.ID RIGHT_REAR_DRIVE_MOTOR_ID = new Spark.ID("DriveHardware/Swerve/RightRear/Drive", 8);
-    public static final Spark.ID RIGHT_REAR_ROTATE_MOTOR_ID = new Spark.ID("DriveHardware/Swerve/RightRear/Rotate", 9);
+    public static final Spark.ID LEFT_FRONT_DRIVE_MOTOR_ID = new Spark.ID("DriveHardware/Swerve/LeftFront/Drive", 15);
+    public static final Spark.ID LEFT_FRONT_ROTATE_MOTOR_ID = new Spark.ID("DriveHardware/Swerve/LeftFront/Rotate", 16);  
+    public static final Spark.ID RIGHT_FRONT_DRIVE_MOTOR_ID = new Spark.ID("DriveHardware/Swerve/RightFront/Drive", 25);
+    public static final Spark.ID RIGHT_FRONT_ROTATE_MOTOR_ID = new Spark.ID("DriveHardware/Swerve/RightFront/Rotate", 26);
+    public static final Spark.ID LEFT_REAR_DRIVE_MOTOR_ID = new Spark.ID("DriveHardware/Swerve/LeftRear/Drive", 35);
+    public static final Spark.ID LEFT_REAR_ROTATE_MOTOR_ID = new Spark.ID("DriveHardware/Swerve/LeftRear/Rotate", 36);
+    public static final Spark.ID RIGHT_REAR_DRIVE_MOTOR_ID = new Spark.ID("DriveHardware/Swerve/RightRear/Drive", 45);
+    public static final Spark.ID RIGHT_REAR_ROTATE_MOTOR_ID = new Spark.ID("DriveHardware/Swerve/RightRear/Rotate", 42);
   }
 }

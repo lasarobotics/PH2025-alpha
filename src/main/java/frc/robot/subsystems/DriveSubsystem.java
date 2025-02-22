@@ -62,7 +62,7 @@ public class DriveSubsystem extends SwerveDrive {
       REVSwerveModule.initializeHardware(
         Constants.REVDriveHardware.LEFT_FRONT_DRIVE_MOTOR_ID,
         Constants.REVDriveHardware.LEFT_FRONT_ROTATE_MOTOR_ID,
-        Spark.MotorKind.NEO_VORTEX,
+        Spark.MotorKind.NEO,
         Spark.MotorKind.NEO_550
       ),
       SwerveModule.Location.LeftFront,
@@ -84,7 +84,7 @@ public class DriveSubsystem extends SwerveDrive {
       REVSwerveModule.initializeHardware(
         Constants.REVDriveHardware.RIGHT_FRONT_DRIVE_MOTOR_ID,
         Constants.REVDriveHardware.RIGHT_FRONT_ROTATE_MOTOR_ID,
-        Spark.MotorKind.NEO_VORTEX,
+        Spark.MotorKind.NEO,
         Spark.MotorKind.NEO_550
       ),
       SwerveModule.Location.RightFront,
@@ -106,7 +106,7 @@ public class DriveSubsystem extends SwerveDrive {
       REVSwerveModule.initializeHardware(
         Constants.REVDriveHardware.LEFT_REAR_DRIVE_MOTOR_ID,
         Constants.REVDriveHardware.LEFT_REAR_ROTATE_MOTOR_ID,
-        Spark.MotorKind.NEO_VORTEX,
+        Spark.MotorKind.NEO,
         Spark.MotorKind.NEO_550
       ),
       SwerveModule.Location.LeftRear,
@@ -128,7 +128,7 @@ public class DriveSubsystem extends SwerveDrive {
       REVSwerveModule.initializeHardware(
         Constants.REVDriveHardware.RIGHT_REAR_DRIVE_MOTOR_ID,
         Constants.REVDriveHardware.RIGHT_REAR_ROTATE_MOTOR_ID,
-        Spark.MotorKind.NEO_VORTEX,
+        Spark.MotorKind.NEO,
         Spark.MotorKind.NEO_550
       ),
       SwerveModule.Location.RightRear,

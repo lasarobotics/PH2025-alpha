@@ -13,13 +13,13 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-public class ArmSubsystem extends SubsystemBase implements AutoCloseable {
+public class IntakeSubsystem extends SubsystemBase implements AutoCloseable {
   public static record Hardware(Spark armMotor, Spark rollerMotor) {}
 
   private Spark m_armMotor;
   private Spark m_rollerMotor;
 
-  public ArmSubsystem (Hardware armHardware) {
+  public IntakeSubsystem (Hardware armHardware) {
     this.m_armMotor = armHardware.armMotor;
     this.m_rollerMotor = armHardware.rollerMotor;
   }
@@ -33,7 +33,7 @@ public class ArmSubsystem extends SubsystemBase implements AutoCloseable {
   }
 
   /**
-   * Stop climb
+   * Stop the arm and rollers
    */
   private void stop() {
     m_armMotor.stopMotor();
@@ -65,19 +65,14 @@ public class ArmSubsystem extends SubsystemBase implements AutoCloseable {
   }
 
   /**
-   * Command to lower the arm
-   * @return Command to run arm motor in reverse
-   */
-  public Command lowerArmCommand() {
-    return startEnd(() -> lowerArm(), () -> stop());
-  }
-
-  /**
    * Command to intake algae
    * @return Command to run the roller motor
    */
   public Command intakeCommand() {
-    return startEnd(() -> intake(), () -> stop());
+    return startEnd(() -> {
+      lowerArm();
+      intake();
+    }, () -> stop());
   }
 
   /**
