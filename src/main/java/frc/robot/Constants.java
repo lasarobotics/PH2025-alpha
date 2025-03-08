@@ -74,7 +74,7 @@ public final class Constants {
     public static final Time AUTO_LOCK_TIME = Units.Seconds.of(3.0);
     public static final Current DRIVE_CURRENT_LIMIT = Units.Amps.of(90.0);
 
-    public static final ControlCentricity DRIVE_CONTROL_CENTRICITY = ControlCentricity.FIELD_CENTRIC;
+    public static final ControlCentricity DRIVE_CONTROL_CENTRICITY = ControlCentricity.ROBOT_CENTRIC;
 
     private static final double DRIVE_THROTTLE_INPUT_CURVE_X[] = { 0.0, 0.100, 0.200, 0.300, 0.400, 0.500, 0.600, 0.700, 0.800, 0.900, 1.000 };
     private static final double DRIVE_THROTTLE_INPUT_CURVE_Y[] = { 0.0, 0.052, 0.207, 0.465, 0.827, 1.293, 1.862, 2.534, 3.310, 4.189, 5.172 };
@@ -94,7 +94,7 @@ public final class Constants {
     public static final Spark.ID ROLLER_MOTOR_ID = new Spark.ID("IntakeHardware/Roller", 51);
     public static final Spark.ID ARM_MOTOR_ID = new Spark.ID("IntakeHardware/Arm", 52);
     public static final Dimensionless ARM_SPEED = Units.Percent.of(5);
-    public static final Dimensionless ROLLER_SPEED = Units.Percent.of(20);
+    public static final Dimensionless ROLLER_SPEED = Units.Percent.of(2);
   }
 
   public static class Climber {
