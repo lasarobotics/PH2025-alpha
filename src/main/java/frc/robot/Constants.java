@@ -95,6 +95,10 @@ public final class Constants {
     public static final Spark.ID ARM_MOTOR_ID = new Spark.ID("IntakeHardware/Arm", 52);
     public static final Dimensionless ARM_SPEED = Units.Percent.of(5);
     public static final Dimensionless ROLLER_SPEED = Units.Percent.of(2);
+    public static final PIDConstants INTAKE_PID = PIDConstants.of(0.05, 0.0, 0.0, 0.0, 0.0);
+    public static final double STOW_POS = 0;
+    public static final double INTAKE_POS = -9.2;
+    public static final Current CURRENT_LIMIT = Units.Amps.of(20);
   }
 
   public static class Climber {

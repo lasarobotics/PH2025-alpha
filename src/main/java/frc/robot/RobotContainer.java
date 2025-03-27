@@ -27,13 +27,15 @@ public class RobotContainer {
     Constants.Drive.DRIVE_LOOKAHEAD
   );
 
-  // public static final IntakeSubsystem INTAKE_SUBSYSTEM = new IntakeSubsystem (
-  //   IntakeSubsystem.initializeHardware()
-  // );
+  public static final IntakeSubsystem INTAKE_SUBSYSTEM = new IntakeSubsystem (
+    IntakeSubsystem.initializeHardware(), 
+    Constants.Arm.INTAKE_PID,
+    Constants.Arm.CURRENT_LIMIT
+  );
 
-  // public static final ClimberSubsystem CLIMBER_SUBSYSTEM = new ClimberSubsystem (
-  //   ClimberSubsystem.initializeHardware()
-  // );
+  public static final ClimberSubsystem CLIMBER_SUBSYSTEM = new ClimberSubsystem (
+    ClimberSubsystem.initializeHardware()
+  );
 
   private static final CommandXboxController PRIMARY_CONTROLLER = new CommandXboxController(Constants.HID.PRIMARY_CONTROLLER_PORT);
 
@@ -65,11 +67,13 @@ public class RobotContainer {
     PRIMARY_CONTROLLER.start().onTrue(DRIVE_SUBSYSTEM.toggleTractionControlCommand());
     PRIMARY_CONTROLLER.povLeft().onTrue(DRIVE_SUBSYSTEM.resetPoseCommand(() -> new Pose2d()));
 
-    // PRIMARY_CONTROLLER.rightTrigger().whileTrue(INTAKE_SUBSYSTEM.intakeCommand());
-    // PRIMARY_CONTROLLER.leftTrigger().whileTrue(INTAKE_SUBSYSTEM.outtakeCommand());
-    // PRIMARY_CONTROLLER.b().whileTrue(INTAKE_SUBSYSTEM.raiseArmCommand());
-    // PRIMARY_CONTROLLER.rightBumper().whileTrue(CLIMBER_SUBSYSTEM.raiseClimbCommand());
-    // PRIMARY_CONTROLLER.leftBumper().whileTrue(CLIMBER_SUBSYSTEM.lowerClimbCommand());
+    PRIMARY_CONTROLLER.rightTrigger().whileTrue(INTAKE_SUBSYSTEM.intakeAlgaeCommand());
+    PRIMARY_CONTROLLER.leftTrigger().whileTrue(INTAKE_SUBSYSTEM.outtakeAlgaeCommand());
+    PRIMARY_CONTROLLER.b().whileTrue(INTAKE_SUBSYSTEM.intakeCoralCommand());
+    PRIMARY_CONTROLLER.a().whileTrue(INTAKE_SUBSYSTEM.outtakeCoralCommand());
+    PRIMARY_CONTROLLER.x().whileTrue(INTAKE_SUBSYSTEM.raiseArmCommand());
+    PRIMARY_CONTROLLER.rightBumper().whileTrue(CLIMBER_SUBSYSTEM.raiseClimbCommand());
+    PRIMARY_CONTROLLER.leftBumper().whileTrue(CLIMBER_SUBSYSTEM.lowerClimbCommand());
   }
 
     /**

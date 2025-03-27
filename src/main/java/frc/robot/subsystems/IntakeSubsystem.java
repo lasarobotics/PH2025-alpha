@@ -5,10 +5,17 @@
 package frc.robot.subsystems;
 import org.lasarobotics.hardware.revrobotics.Spark;
 import org.lasarobotics.hardware.revrobotics.Spark.MotorKind;
+import org.lasarobotics.utils.PIDConstants;
 
 import com.revrobotics.spark.SparkBase.ControlType;
+import com.revrobotics.spark.SparkBase.PersistMode;
+import com.revrobotics.spark.SparkBase.ResetMode;
+import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
+import com.revrobotics.spark.config.SparkBaseConfig;
+import com.revrobotics.spark.config.SparkMaxConfig;
 
 import edu.wpi.first.units.Units;
+import edu.wpi.first.units.measure.Current;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -18,10 +25,39 @@ public class IntakeSubsystem extends SubsystemBase implements AutoCloseable {
 
   private Spark m_armMotor;
   private Spark m_rollerMotor;
+  private SparkBaseConfig m_armMotorConfig;
+  private SparkBaseConfig m_rollerMotorConfig;
+  private final Current ARM_MOTOR_CURRENT_LIMIT = Constants.Arm.CURRENT_LIMIT;
+  private final Current ROLLER_MOTOR_CURRENT_LIMIT = Constants.Arm.CURRENT_LIMIT;
 
-  public IntakeSubsystem (Hardware armHardware) {
+
+  public IntakeSubsystem (Hardware armHardware, PIDConstants drivePID, Current driveCurrentLimit) {
     this.m_armMotor = armHardware.armMotor;
     this.m_rollerMotor = armHardware.rollerMotor;
+
+    m_armMotorConfig = new SparkMaxConfig();
+    m_rollerMotorConfig = new SparkMaxConfig();
+  
+    m_armMotorConfig.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder);
+  
+    m_armMotorConfig.closedLoop.pidf(
+        drivePID.kP,
+        drivePID.kI,
+        drivePID.kD,
+        drivePID.kF
+    );  
+
+    m_armMotorConfig.closedLoop.maxMotion.maxVelocity(1420);
+    m_armMotorConfig.closedLoop.maxMotion.maxAcceleration(1420);
+    m_rollerMotorConfig.closedLoop.maxMotion.maxVelocity(750);
+    m_rollerMotorConfig.closedLoop.maxMotion.maxAcceleration(750);
+
+    m_armMotorConfig.smartCurrentLimit((int)ARM_MOTOR_CURRENT_LIMIT.in(Units.Amps));
+    m_rollerMotorConfig.smartCurrentLimit((int)ROLLER_MOTOR_CURRENT_LIMIT.in(Units.Amps));
+
+    m_armMotor.configure(m_armMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
+    m_rollerMotor.configure(m_rollerMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
+    m_armMotor.resetEncoder();
   }
 
   public static Hardware initializeHardware() {
@@ -41,37 +77,47 @@ public class IntakeSubsystem extends SubsystemBase implements AutoCloseable {
   }
 
   private void raiseArm() {
-    m_armMotor.set(Constants.Arm.ARM_SPEED.in(Units.Percent), ControlType.kDutyCycle);
+    m_armMotor.set(Constants.Arm.STOW_POS, ControlType.kMAXMotionPositionControl);
+    m_rollerMotor.set(Constants.Arm.ROLLER_SPEED.in(Units.Percent)/5, ControlType.kDutyCycle);
+
   }
 
   private void lowerArm() {
-    m_armMotor.set(-Constants.Arm.ARM_SPEED.in(Units.Percent), ControlType.kDutyCycle);
+    m_armMotor.set(Constants.Arm.INTAKE_POS, ControlType.kMAXMotionPositionControl);
   }
 
-  private void intake() {
+  private void intakeAlgae() {
     m_rollerMotor.set(Constants.Arm.ROLLER_SPEED.in(Units.Percent), ControlType.kDutyCycle);
   }
 
-  private void outtake() {
+  private void outtakeAlgae() {
     m_rollerMotor.set(-Constants.Arm.ROLLER_SPEED.in(Units.Percent), ControlType.kDutyCycle);
   }
 
-  /**
-   * Command to raise the arm
-   * @return Command to run arm motor
-   */
-  public Command raiseArmCommand() {
-    return startEnd(() -> raiseArm(), () -> stop());
+  private void intakeCoral() {
+    m_rollerMotor.set(-Constants.Arm.ROLLER_SPEED.in(Units.Percent), ControlType.kDutyCycle);
+  }
+
+  private void outtakeCoral() {
+    m_rollerMotor.set(Constants.Arm.ROLLER_SPEED.in(Units.Percent), ControlType.kDutyCycle);
+  }
+
+  public Command intakeCoralCommand() {
+    return startEnd(() -> intakeCoral(), () -> stop());
+  }
+
+  public Command outtakeCoralCommand() {
+    return startEnd(() -> outtakeCoral(), () -> stop());
   }
 
   /**
    * Command to intake algae
    * @return Command to run the roller motor
    */
-  public Command intakeCommand() {
+  public Command intakeAlgaeCommand() {
     return startEnd(() -> {
       lowerArm();
-      intake();
+      intakeAlgae();
     }, () -> stop());
   }
 
@@ -79,8 +125,12 @@ public class IntakeSubsystem extends SubsystemBase implements AutoCloseable {
    * Command to outtake algae
    * @return Command to run the roller motor in reverse
    */
-  public Command outtakeCommand() {
-    return startEnd(() -> outtake(), () -> stop());
+  public Command outtakeAlgaeCommand() {
+    return startEnd(() -> outtakeAlgae(), () -> stop());
+  }
+
+  public Command raiseArmCommand() {
+    return startEnd(() -> raiseArm(), () -> stop());
   }
 
   /**
@@ -89,6 +139,11 @@ public class IntakeSubsystem extends SubsystemBase implements AutoCloseable {
    */
   public Command stopCommand() {
     return runOnce(() -> stop());
+  }
+
+  @Override
+  public void periodic() {
+    //System.out.println(m_armMotor.getInputs().encoderPosition);
   }
 
   /**
