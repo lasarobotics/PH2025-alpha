@@ -12,11 +12,13 @@ import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
 import com.revrobotics.spark.config.SparkBaseConfig;
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
 import edu.wpi.first.units.Units;
 import edu.wpi.first.units.measure.Current;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -31,7 +33,7 @@ public class IntakeSubsystem extends SubsystemBase implements AutoCloseable {
   private final Current ROLLER_MOTOR_CURRENT_LIMIT = Constants.Arm.CURRENT_LIMIT;
 
 
-  public IntakeSubsystem (Hardware armHardware, PIDConstants drivePID, Current driveCurrentLimit) {
+  public IntakeSubsystem (Hardware armHardware, PIDConstants intakePID, Current driveCurrentLimit) {
     this.m_armMotor = armHardware.armMotor;
     this.m_rollerMotor = armHardware.rollerMotor;
 
@@ -41,10 +43,10 @@ public class IntakeSubsystem extends SubsystemBase implements AutoCloseable {
     m_armMotorConfig.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder);
   
     m_armMotorConfig.closedLoop.pidf(
-        drivePID.kP,
-        drivePID.kI,
-        drivePID.kD,
-        drivePID.kF
+        intakePID.kP,
+        intakePID.kI,
+        intakePID.kD,
+        intakePID.kF
     );  
 
     m_armMotorConfig.closedLoop.maxMotion.maxVelocity(1420);
@@ -54,9 +56,11 @@ public class IntakeSubsystem extends SubsystemBase implements AutoCloseable {
 
     m_armMotorConfig.smartCurrentLimit((int)ARM_MOTOR_CURRENT_LIMIT.in(Units.Amps));
     m_rollerMotorConfig.smartCurrentLimit((int)ROLLER_MOTOR_CURRENT_LIMIT.in(Units.Amps));
+    m_armMotor.setIdleMode(IdleMode.kBrake);
 
     m_armMotor.configure(m_armMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
     m_rollerMotor.configure(m_rollerMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
+
     m_armMotor.resetEncoder();
   }
 
@@ -72,14 +76,12 @@ public class IntakeSubsystem extends SubsystemBase implements AutoCloseable {
    * Stop the arm and rollers
    */
   private void stop() {
-    m_armMotor.stopMotor();
     m_rollerMotor.stopMotor();
   }
 
   private void raiseArm() {
     m_armMotor.set(Constants.Arm.STOW_POS, ControlType.kMAXMotionPositionControl);
-    m_rollerMotor.set(Constants.Arm.ROLLER_SPEED.in(Units.Percent)/5, ControlType.kDutyCycle);
-
+    //m_rollerMotor.set(Constants.Arm.ROLLER_SPEED.in(Units.Percent)/2, ControlType.kDutyCycle);
   }
 
   private void lowerArm() {
@@ -87,27 +89,24 @@ public class IntakeSubsystem extends SubsystemBase implements AutoCloseable {
   }
 
   private void intakeAlgae() {
-    m_rollerMotor.set(Constants.Arm.ROLLER_SPEED.in(Units.Percent), ControlType.kDutyCycle);
+    m_rollerMotor.set(Constants.Arm.ROLLER_SPEED.in(Units.Percent)/1.5, ControlType.kDutyCycle);
   }
 
   private void outtakeAlgae() {
     m_rollerMotor.set(-Constants.Arm.ROLLER_SPEED.in(Units.Percent), ControlType.kDutyCycle);
   }
 
-  private void intakeCoral() {
-    m_rollerMotor.set(-Constants.Arm.ROLLER_SPEED.in(Units.Percent), ControlType.kDutyCycle);
-  }
-
   private void outtakeCoral() {
-    m_rollerMotor.set(Constants.Arm.ROLLER_SPEED.in(Units.Percent), ControlType.kDutyCycle);
-  }
-
-  public Command intakeCoralCommand() {
-    return startEnd(() -> intakeCoral(), () -> stop());
+    m_armMotor.set(Constants.Arm.INTAKE_POS, ControlType.kMAXMotionPositionControl);
+    m_rollerMotor.set(Constants.Arm.ROLLER_SPEED.in(Units.Percent)/8, ControlType.kDutyCycle);
   }
 
   public Command outtakeCoralCommand() {
     return startEnd(() -> outtakeCoral(), () -> stop());
+  }
+
+  public Command autoOuttakeCoralCommand() {
+    return Commands.run(() -> outtakeCoral()).withTimeout(Units.Seconds.of(1));
   }
 
   /**
@@ -116,9 +115,9 @@ public class IntakeSubsystem extends SubsystemBase implements AutoCloseable {
    */
   public Command intakeAlgaeCommand() {
     return startEnd(() -> {
-      lowerArm();
       intakeAlgae();
-    }, () -> stop());
+      lowerArm();
+      }, () -> stop());
   }
 
   /**

@@ -11,7 +11,9 @@ import org.littletonrobotics.junction.LoggedRobot;
 
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
-import edu.wpi.first.cameraserver.CameraServer;
+/*  Part of the camera functionality
+*   import edu.wpi.first.cameraserver.CameraServer;
+*/
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
@@ -32,7 +34,9 @@ public class Robot extends LoggedRobot {
     );
     m_robotContainer = new RobotContainer();
 
-    CameraServer.startAutomaticCapture();
+    /*  Uncomment this line to use the camera
+    *   CameraServer.startAutomaticCapture();
+    */
   }
 
   @Override

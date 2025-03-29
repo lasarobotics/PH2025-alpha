@@ -58,9 +58,9 @@ public final class Constants {
 
   public static class Drive {
     public static final DriveWheel DRIVE_WHEEL = DriveWheel.create(Units.Inches.of(4.0), Units.Value.of(1.3), Units.Value.of(1.2));
-    public static final PIDConstants DRIVE_PID = PIDConstants.of(0.3, 0.0, 0.001, 0.0, 0.0);
+    public static final PIDConstants DRIVE_PID = PIDConstants.of(0.5, 0.0, 0.001, 0.0, 0.0);
     public static final FFConstants DRIVE_FF = FFConstants.of(0.2, 0.0, 0.0, 0.0);
-    public static final PIDConstants ROTATE_PID = PIDConstants.of(2.0, 0.0, 0.1, 0.0, 0.0);
+    public static final PIDConstants ROTATE_PID = PIDConstants.of(2.75, 0.0, 0.1, 0.0, 0.0);
     public static final FFConstants ROTATE_FF = FFConstants.of(0.2, 0.0, 0.0, 0.0);
     public static final PIDConstants DRIVE_ROTATE_PID = PIDConstants.of(8.0, 0.0, 0.3, 0.0, 0.0);
     public static final PIDConstants DRIVE_AUTO_AIM_PID = PIDConstants.of(12.0, 0.0, 0.1, 0.0, 0.0);
@@ -76,11 +76,16 @@ public final class Constants {
 
     public static final ControlCentricity DRIVE_CONTROL_CENTRICITY = ControlCentricity.FIELD_CENTRIC;
 
+    // private static final double DRIVE_THROTTLE_INPUT_CURVE_X[] = { 0.0, 0.100, 0.200, 0.300, 0.400, 0.500, 0.600, 0.700, 0.800, 0.900, 1.000 };
+    // private static final double DRIVE_THROTTLE_INPUT_CURVE_Y[] = { 0.0, 0.052, 0.207, 0.465, 0.827, 1.293, 1.862, 2.534, 3.310, 4.189, 5.172 };
+    // private static final double DRIVE_TURN_INPUT_CURVE_X[] = { 0.0, 0.100, 0.200, 0.300, 0.400, 0.500, 0.600, 0.700, 0.800, 0.900, 1.0 };
+    // private static final double DRIVE_TURN_INPUT_CURVE_Y[] = { 0.0, 0.010, 0.050, 0.100, 0.150, 0.200, 0.250, 0.300, 0.400, 0.600, 1.0 };
+  
     private static final double DRIVE_THROTTLE_INPUT_CURVE_X[] = { 0.0, 0.100, 0.200, 0.300, 0.400, 0.500, 0.600, 0.700, 0.800, 0.900, 1.000 };
     private static final double DRIVE_THROTTLE_INPUT_CURVE_Y[] = { 0.0, 0.052, 0.207, 0.465, 0.827, 1.293, 1.862, 2.534, 3.310, 4.189, 5.172 };
     private static final double DRIVE_TURN_INPUT_CURVE_X[] = { 0.0, 0.100, 0.200, 0.300, 0.400, 0.500, 0.600, 0.700, 0.800, 0.900, 1.0 };
-    private static final double DRIVE_TURN_INPUT_CURVE_Y[] = { 0.0, 0.010, 0.050, 0.100, 0.150, 0.200, 0.250, 0.300, 0.400, 0.600, 1.0 };
-
+    private static final double DRIVE_TURN_INPUT_CURVE_Y[] = { 0.0, 0.010, 0.04, 0.09, 0.16, 0.25, 0.36, 0.49, 0.64, 0.81, 1.0 };
+    
     private static final SplineInterpolator SPLINE_INTERPOLATOR = new SplineInterpolator();
     public static final PolynomialSplineFunction DRIVE_THROTTLE_INPUT_CURVE = SPLINE_INTERPOLATOR.interpolate(DRIVE_THROTTLE_INPUT_CURVE_X, DRIVE_THROTTLE_INPUT_CURVE_Y);
     public static final PolynomialSplineFunction DRIVE_TURN_INPUT_CURVE = SPLINE_INTERPOLATOR.interpolate(DRIVE_TURN_INPUT_CURVE_X, DRIVE_TURN_INPUT_CURVE_Y);
@@ -93,10 +98,9 @@ public final class Constants {
   public static class Arm {
     public static final Spark.ID ROLLER_MOTOR_ID = new Spark.ID("IntakeHardware/Roller", 51);
     public static final Spark.ID ARM_MOTOR_ID = new Spark.ID("IntakeHardware/Arm", 52);
-    public static final Dimensionless ARM_SPEED = Units.Percent.of(5);
-    public static final Dimensionless ROLLER_SPEED = Units.Percent.of(2);
-    public static final PIDConstants INTAKE_PID = PIDConstants.of(0.05, 0.0, 0.0, 0.0, 0.0);
-    public static final double STOW_POS = 0;
+    public static final Dimensionless ROLLER_SPEED = Units.Percent.of(1);
+    public static final PIDConstants INTAKE_PID = PIDConstants.of(0.5, 0.0, 0.0, 0.0, 0.0);
+    public static final double STOW_POS = 0.5;
     public static final double INTAKE_POS = -9.2;
     public static final Current CURRENT_LIMIT = Units.Amps.of(20);
   }

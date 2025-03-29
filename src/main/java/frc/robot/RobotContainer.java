@@ -4,6 +4,9 @@
 
 package frc.robot;
 
+import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.commands.PathPlannerAuto;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -42,6 +45,8 @@ public class RobotContainer {
   private static SendableChooser<Command> m_automodeChooser = new SendableChooser<>();
 
   public RobotContainer() {
+    NamedCommands.registerCommand("outtakeCoral", INTAKE_SUBSYSTEM.autoOuttakeCoralCommand());
+
     //Set drive command
     DRIVE_SUBSYSTEM.setDefaultCommand(
       DRIVE_SUBSYSTEM.driveCommand(
@@ -67,11 +72,10 @@ public class RobotContainer {
     PRIMARY_CONTROLLER.start().onTrue(DRIVE_SUBSYSTEM.toggleTractionControlCommand());
     PRIMARY_CONTROLLER.povLeft().onTrue(DRIVE_SUBSYSTEM.resetPoseCommand(() -> new Pose2d()));
 
-    PRIMARY_CONTROLLER.rightTrigger().whileTrue(INTAKE_SUBSYSTEM.intakeAlgaeCommand());
+    PRIMARY_CONTROLLER.x().whileTrue(INTAKE_SUBSYSTEM.intakeAlgaeCommand());
     PRIMARY_CONTROLLER.leftTrigger().whileTrue(INTAKE_SUBSYSTEM.outtakeAlgaeCommand());
-    PRIMARY_CONTROLLER.b().whileTrue(INTAKE_SUBSYSTEM.intakeCoralCommand());
-    PRIMARY_CONTROLLER.a().whileTrue(INTAKE_SUBSYSTEM.outtakeCoralCommand());
-    PRIMARY_CONTROLLER.x().whileTrue(INTAKE_SUBSYSTEM.raiseArmCommand());
+    PRIMARY_CONTROLLER.rightTrigger().whileTrue(INTAKE_SUBSYSTEM.outtakeCoralCommand());
+    PRIMARY_CONTROLLER.a().whileTrue(INTAKE_SUBSYSTEM.raiseArmCommand());
     PRIMARY_CONTROLLER.rightBumper().whileTrue(CLIMBER_SUBSYSTEM.raiseClimbCommand());
     PRIMARY_CONTROLLER.leftBumper().whileTrue(CLIMBER_SUBSYSTEM.lowerClimbCommand());
   }
@@ -81,6 +85,9 @@ public class RobotContainer {
    */
   private void autoModeChooser() {
     m_automodeChooser.setDefaultOption("Do nothing", Commands.none());
+    m_automodeChooser.addOption("LeaveWokGodKingRachit", new PathPlannerAuto("liam"));
+    m_automodeChooser.addOption("L1x1WokGodKingRachit", new PathPlannerAuto("L1 Coral"));
+    m_automodeChooser.addOption("L1x2WokGodKingRachit", new PathPlannerAuto("L1 Coral x2"));
   }
 
   /**
