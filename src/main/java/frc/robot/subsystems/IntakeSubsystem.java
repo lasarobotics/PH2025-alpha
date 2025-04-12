@@ -77,11 +77,11 @@ public class IntakeSubsystem extends SubsystemBase implements AutoCloseable {
    */
   private void stop() {
     m_rollerMotor.stopMotor();
+    m_armMotor.stopMotor();
   }
 
   private void raiseArm() {
     m_armMotor.set(Constants.Arm.STOW_POS, ControlType.kMAXMotionPositionControl);
-    //m_rollerMotor.set(Constants.Arm.ROLLER_SPEED.in(Units.Percent)/2, ControlType.kDutyCycle);
   }
 
   private void lowerArm() {
@@ -92,21 +92,32 @@ public class IntakeSubsystem extends SubsystemBase implements AutoCloseable {
     m_rollerMotor.set(Constants.Arm.ROLLER_SPEED.in(Units.Percent)/1.5, ControlType.kDutyCycle);
   }
 
+  private void holdPos() {
+    m_armMotor.set(Constants.Arm.HOLD_ALGAE, ControlType.kMAXMotionPositionControl);
+  }
+
   private void outtakeAlgae() {
     m_rollerMotor.set(-Constants.Arm.ROLLER_SPEED.in(Units.Percent), ControlType.kDutyCycle);
   }
 
   private void outtakeCoral() {
-    m_armMotor.set(Constants.Arm.INTAKE_POS, ControlType.kMAXMotionPositionControl);
     m_rollerMotor.set(Constants.Arm.ROLLER_SPEED.in(Units.Percent)/8, ControlType.kDutyCycle);
   }
 
-  public Command outtakeCoralCommand() {
-    return startEnd(() -> outtakeCoral(), () -> stop());
+  public Command autoOuttakeCoralCommand() {
+    return Commands.run(() -> outtakeCoral());
   }
 
-  public Command autoOuttakeCoralCommand() {
-    return Commands.run(() -> outtakeCoral()).withTimeout(Units.Seconds.of(1));
+  public Command holdPosCommand() {
+    return startEnd(() -> holdPos(), () -> stop());
+  }
+
+  public Command outtakeCoralCommand() {
+    return Commands.sequence(autoOuttakeCoralCommand().withTimeout(0.4), lowerArmCommand());
+  }
+
+  public Command lowerArmCommand() {
+    return startEnd(() -> lowerArm(), () -> stop());
   }
 
   /**

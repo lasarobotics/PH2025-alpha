@@ -26,6 +26,7 @@ public class RobotContainer {
     Constants.Drive.DRIVE_THROTTLE_INPUT_CURVE,
     Constants.Drive.DRIVE_TURN_INPUT_CURVE,
     Constants.Drive.DRIVE_TURN_SCALAR,
+    
     Constants.HID.CONTROLLER_DEADBAND,
     Constants.Drive.DRIVE_LOOKAHEAD
   );
@@ -78,6 +79,8 @@ public class RobotContainer {
     PRIMARY_CONTROLLER.a().whileTrue(INTAKE_SUBSYSTEM.raiseArmCommand());
     PRIMARY_CONTROLLER.rightBumper().whileTrue(CLIMBER_SUBSYSTEM.raiseClimbCommand());
     PRIMARY_CONTROLLER.leftBumper().whileTrue(CLIMBER_SUBSYSTEM.lowerClimbCommand());
+    PRIMARY_CONTROLLER.b().whileTrue(INTAKE_SUBSYSTEM.lowerArmCommand());
+    PRIMARY_CONTROLLER.y().whileTrue(INTAKE_SUBSYSTEM.holdPosCommand());
   }
 
     /**
