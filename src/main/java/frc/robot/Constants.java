@@ -57,7 +57,7 @@ public final class Constants {
   }
 
   public static class Drive {
-    public static final DriveWheel DRIVE_WHEEL = DriveWheel.create(Units.Inches.of(3.0), Units.Value.of(1.0), Units.Value.of(0.9);
+    public static final DriveWheel DRIVE_WHEEL = DriveWheel.create(Units.Inches.of(3.0), Units.Value.of(1.0), Units.Value.of(0.9));
     public static final PIDConstants DRIVE_PID = PIDConstants.of(.2, 0.0, 0.0, 0.0, 0.0);
     public static final FFConstants DRIVE_FF = FFConstants.of(0.2, 0.0, 0.0, 0.0);
     public static final PIDConstants ROTATE_PID = PIDConstants.of(1.1, 0.0, 0.0, 0.0, 0.0);
