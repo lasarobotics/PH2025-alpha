@@ -101,7 +101,7 @@ public class IntakeSubsystem extends SubsystemBase implements AutoCloseable {
   }
 
   private void outtakeCoral() {
-    m_rollerMotor.set(Constants.Arm.ROLLER_SPEED.in(Units.Percent)/8, ControlType.kDutyCycle);
+    m_rollerMotor.set(Constants.Arm.ROLLER_SPEED.in(Units.Percent)/2, ControlType.kDutyCycle);
   }
 
   public Command autoOuttakeCoralCommand() {
